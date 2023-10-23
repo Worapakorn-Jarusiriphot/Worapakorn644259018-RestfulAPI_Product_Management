@@ -1,0 +1,376 @@
+{
+  "swagger": "2.0",
+  "info": {
+      "title": "Product Management API",
+      "description": "All RESTful API Endpoint for Product Management",
+      "version": "0.0.1"
+  },
+  "paths": {
+      "/api/auth/signin": {
+          "post": {
+              "tags": [
+                  "Authentication"
+              ],
+              "description": "Sign in to Product Management",
+              "parameters": [
+                  {
+                      "name": "body",
+                      "in": "body",
+                      "required": true,
+                      "schema": {
+                          "type": "object",
+                          "properties": {
+                              "username": {
+                                  "type": "string"
+                              },
+                              "password": {
+                                  "type": "string"
+                              }
+                          }
+                      }
+                  }
+              ],
+              "responses": {
+                  "200": {
+                      "description": "Successfully signed in",
+                      "content": {
+                          "application/json": {
+                              "schema": {
+                                  "type": "object",
+                                  "properties": {
+                                      "id": {
+                                          "type": "number"
+                                      },
+                                      "username": {
+                                          "type": "string"
+                                      },
+                                      "email": {
+                                          "type": "string"
+                                      },
+                                      "roles": {
+                                          "type": "array",
+                                          "items": {
+                                              "type": "string"
+                                          }
+                                      },
+                                      "accessToken": {
+                                          "type": "string"
+                                      }
+                                  },
+                                  "example": {
+                                      "id": 3,
+                                      "username": "username",
+                                      "email": "email@webmail.npru.ac.th",
+                                      "roles": [
+                                          "ROLES_MODERATOR",
+                                          "ROLES_ADMIN"
+                                      ],
+                                      "accessToken": "eyJhbGc....S_2b42-zD4"
+                                  }
+                              }
+                          }
+                      }
+                  }
+              }
+          }
+      },
+      "/api/auth/signup": {
+          "post": {
+              "tags": [
+                  "Authentication"
+              ],
+              "description": "Sign up for Product Management",
+              "parameters": [
+                  {
+                      "name": "body",
+                      "in": "body",
+                      "required": true,
+                      "schema": {
+                          "type": "object",
+                          "properties": {
+                              "username": {
+                                  "type": "string"
+                              },
+                              "email": {
+                                  "type": "string"
+                              },
+                              "password": {
+                                  "type": "string"
+                              },
+                              "roles": {
+                                  "type": "array",
+                                  "items": {
+                                      "type": "string"
+                                  }
+                              }
+                          }
+                      }
+                  }
+              ],
+              "responses": {
+                  "200": {
+                      "description": "User was registered successfully",
+                      "content": {
+                          "application/json": {
+                              "schema": {
+                                  "type": "object",
+                                  "properties": {
+                                      "message": {
+                                          "type": "string"
+                                      }
+                                  },
+                                  "example": {
+                                      "message": "User was registered successfully"
+                                  }
+                              }
+                          }
+                      }
+                  }
+              }
+          }
+      },
+      "/products": {
+          "get": {
+              "tags": [
+                  "Product"
+              ],
+              "description": "Get a list of products",
+              "responses": {
+                  "200": {
+                      "description": "Successfully retrieved products",
+                      "content": {
+                          "application/json": {
+                              "schema": {
+                                  "type": "array",
+                                  "items": {
+                                      "type": "object",
+                                      "properties": {
+                                          "id": {
+                                              "type": "number"
+                                          },
+                                          "title": {
+                                              "type": "string"
+                                          },
+                                          "imagePath": {
+                                              "type": "string"
+                                          },
+                                          "description": {
+                                              "type": "string"
+                                          },
+                                          "price": {
+                                            "type": "number"
+                                        },
+                                        "category": {
+                                            "type": "string"
+                                        },
+                                          "createdAt": {
+                                              "type": "string",
+                                              "format": "date-time"
+                                          },
+                                          "updatedAt": {
+                                              "type": "string",
+                                              "format": "date-time"
+                                          }
+                                      }
+                                  }
+                              }
+                          }
+                      }
+                  }
+              }
+          },
+          "post": {
+            "tags": [
+                "Product"
+            ],
+            "description": "Create a new product",
+            "parameters": [
+                {
+                    "name": "body",
+                    "in": "body",
+                    "required": true,
+                    "schema": {
+                        "type": "object",
+                        "properties": {
+                            "title": {
+                                "type": "string"
+                            },
+                            "imagePath": {
+                                "type": "string"
+                            },
+                            "description": {
+                                "type": "string"
+                            },
+                            "price": {
+                              "type": "number"
+                          },
+                          "category": {
+                              "type": "string"
+                          }
+                        }
+                    }
+                }
+            ],
+            "responses": {
+                "200": {
+                    "description": "Successfully created product",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "message": {
+                                        "type": "string"
+                                    }
+                                },
+                                "example": {
+                                    "message": "Successfully created product"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+      },
+      "/products/{id}": {
+          "get": {
+              "tags": [
+                  "Product"
+              ],
+              "description": "Get Product by ID",
+              "parameters": [
+                  {
+                      "name": "id",
+                      "in": "path",
+                      "required": true,
+                      "schema": {
+                          "type": "integer"
+                      }
+                  }
+              ],
+              "responses": {
+                  "200": {
+                      "description": "Successfully get product by Id",
+                      "content": {
+                          "application/json": {
+                              "schema": {
+                                  "type": "object",
+                                  "properties": {
+                                    "id": {
+                                        "type": "number"
+                                    },
+                                    "title": {
+                                        "type": "string"
+                                    },
+                                    "imagePath": {
+                                        "type": "string"
+                                    },
+                                    "description": {
+                                        "type": "string"
+                                    },
+                                    "price": {
+                                      "type": "number"
+                                    },
+                                    "category": {
+                                      "type": "string"
+                                    },
+                                    "createdAt": {
+                                        "type": "string",
+                                        "format": "date-time"
+                                    },
+                                    "updatedAt": {
+                                        "type": "string",
+                                        "format": "date-time"
+                                    }
+                                  }
+                              }
+                          }
+                      }
+                  }
+              }
+          },
+          "put": {
+            "tags": [
+              "Product"
+            ],
+            "description": "Update an existing product",
+            "parameters": [
+              {
+                "name": "id",
+                "in": "path",
+                "required": true,
+                "description": "ID of the product to update",
+                "type": "integer"
+              },
+              {
+                "name": "body",
+                "in": "body",
+                "required": true,
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "title": {
+                        "type": "string"
+                    },
+                    "imagePath": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "price": {
+                      "type": "number"
+                    },
+                    "category": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            ],
+            "responses": {
+              "200": {
+                "description": "Successfully updated product",
+                "content": {
+                  "application/json": {
+                    "schema": {
+                      "type": "object",
+                      "properties": {
+                        "message": {
+                          "type": "string"
+                        }
+                      },
+                      "example": {
+                        "message": "Successfully updated product"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "delete": {
+              "tags": [
+                  "Product"
+              ],
+              "description": "Delete a product by ID",
+              "parameters": [
+                  {
+                      "name": "id",
+                      "in": "path",
+                      "required": true,
+                      "schema": {
+                          "type": "integer"
+                      }
+                  }
+              ],
+              "responses": {
+                  "204": {
+                      "description": "Successfully deleted product"
+                  }
+              }
+          }
+      }
+  }
+}
