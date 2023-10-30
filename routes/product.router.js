@@ -1,10 +1,11 @@
 const express = require("express");
 const router = express.Router();
 const Product = require("../controllers/product.controller");
+const { authJwt } = require("../middleware");
 
 //Create a new product
 //http://localhost:5000/products
-router.post("/products", async (req, res) => {
+router.post("/products", [authJwt.verifyToken, authJwt.isAdmin], async (req, res) => {
   try {
     const newProduct = req.body;
     const createProduct = await Product.createProduct(newProduct);
@@ -25,7 +26,7 @@ router.get("/products", async (req, res) => {
 });
 
 //Get Product by ID
-router.get("/products/:id", async (req, res) => {
+router.get("/products/:id", [authJwt.verifyToken], async (req, res) => {
   try {
     const productId = req.params.id;
     const product = await Product.getById(productId);
@@ -40,7 +41,7 @@ router.get("/products/:id", async (req, res) => {
 });
 
 //Update a product data
-router.put("/products/:id", async (req, res) => {
+router.put("/products/:id", [authJwt.verifyToken, authJwt.isAdmin], async (req, res) => {
   try {
     const productId = req.params.id;
     const productData = req.body;
@@ -59,7 +60,7 @@ router.put("/products/:id", async (req, res) => {
 });
 
 //Delete a product
-router.delete("/products/:id", async (req, res) => {
+router.delete("/products/:id", [authJwt.verifyToken, authJwt.isAdmin], async (req, res) => {
   try {
     const productId = req.params.id;
     const isDeleted = await Product.removeById(productId);

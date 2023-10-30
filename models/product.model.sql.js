@@ -4,15 +4,17 @@ const sql = require("./db.sql");
 const Product = function (product) { 
    //Attributes
   this.id = product.id; 
-  this.name = product.name;
-  this.type = product.type;
-  this.imageURL = product.imageURL;
+  this.title = product.title;
+  this.imagePath = product.imagePath;
+  this.description = product.description;
+  this.price = product.price;
+  this.category = product.category;
 };
 
 //Method
 //Insert new product
 Product.create = (newProduct, result) => {
-  //INSERT INTO product (id, name, type, imageURL) VALUES ("1", "...", "...", "...")
+  //INSERT INTO product (id, title, imagePath, description, price, category) VALUES ("1", "...", "...", "...")
   sql.query("INSERT INTO products SET ?", newProduct, (err, res) => {
     if (err) {
       console.log("error", err);
@@ -62,10 +64,10 @@ Product.getById = (productId, result) => {
 
 //Update By ID
 Product.updateById = (id, params, result) => { 
-  //UPDATE products SET name = "name", type = "type", imageurl = "imageurl" WHERE id ="id"
+  //UPDATE products SET title = "title", imagePath = "imagePath", description = "description" , price = "price", category = "category" WHERE id ="id"
   sql.query(
-    "UPDATE products SET name = ?, type = ?, imageurl = ? WHERE id = ?",
-    [params.name, params.type, params.imageURL, id],
+    "UPDATE products SET title = ?, imagePath = ?, description = ? , price = ?, category = ? WHERE id = ?",
+    [params.title, params.imagePath, params.description, params.price, params.category, id],
     (err, res) => {
       //fail
       if (err) {
