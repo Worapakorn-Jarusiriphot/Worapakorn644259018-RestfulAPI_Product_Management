@@ -4,11 +4,11 @@ const Product = require("../models/product.model");
 Product.createProduct = async (newProduct) => {
   try {
     const createProduct = await Product.create(newProduct);
-    console.log("created product:", createProduct.toJSON());
+    console.log("product.controller.js :: created product:", createProduct.toJSON());
     return createProduct.toJSON();
   } catch (error) {
-    console.log("err", err);
-    throw err;
+    console.error("product.controller.js :: createProduct error:", error);
+    throw error;
   }
 };
 //get all products
@@ -18,7 +18,7 @@ Product.getAll = async () => {
     //console.log(products);
     return products.map((product) => product.toJSON());
   } catch (error) {
-    console.error("error:", error);
+    console.error("product.controller.js :: getAll error:", error);
     throw error;
   }
 };
@@ -35,7 +35,7 @@ Product.getById = async (productId) => {
       throw { kind: "not_found" };
     }
   } catch (error) {
-    console.log("error:", error);
+    console.log("product.controller.js :: getById error:", error);
     throw error;
   }
 };
@@ -50,7 +50,7 @@ Product.updateById = async (id, productData) => {
     }
     return { id: id, ...productData };
   } catch (error) {
-    console.log("error:", error);
+    console.log("product.controller.js :: updateById error:", error);
     throw error;
   }
 };
@@ -63,7 +63,7 @@ Product.removeById = async (id) => {
     }
     return true
   } catch (error) {
-    console.log("error:", error);
+    console.log("product.controller.js :: removeById error:", error);
     throw error;
   }
 };

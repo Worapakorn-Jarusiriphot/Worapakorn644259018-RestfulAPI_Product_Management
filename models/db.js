@@ -20,10 +20,10 @@ const sequelize = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {
 async function testConection(){
     try {
       await sequelize.authenticate();
-      console.log("Connection has been established successfully.");
-      console.log("Connection has been established by PU");
+      console.log("db.js : Connection has been established successfully.");
+      console.log("db.js : Connection has been established by PU");
     } catch (error) {
-      console.error("Unable to connect to the database:", error);
+      console.error("db.js : Unable to connect to the database:", error);
     }
 }
 
