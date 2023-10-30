@@ -180,9 +180,7 @@
               }
           },
           "post": {
-            "tags": [
-                "Product"
-            ],
+            "tags": ["Product"],
             "description": "Create a new product",
             "parameters": [
                 {
@@ -192,23 +190,20 @@
                     "schema": {
                         "type": "object",
                         "properties": {
-                            "title": {
-                                "type": "string"
-                            },
-                            "imagePath": {
-                                "type": "string"
-                            },
-                            "description": {
-                                "type": "string"
-                            },
-                            "price": {
-                              "type": "number"
-                          },
-                          "category": {
-                              "type": "string"
-                          }
+                            "title": {"type": "string"},
+                            "imagePath": {"type": "string"},
+                            "description": {"type": "string"},
+                            "price": {"type": "number"},
+                            "category": {"type": "string"}
                         }
                     }
+                },
+                {
+                    "name": "x-access-token",
+                    "in": "header",
+                    "description": "Access token for user authentication",
+                    "required": true,
+                    "type": "string"
                 }
             ],
             "responses": {
@@ -219,9 +214,7 @@
                             "schema": {
                                 "type": "object",
                                 "properties": {
-                                    "message": {
-                                        "type": "string"
-                                    }
+                                    "message": {"type": "string"}
                                 },
                                 "example": {
                                     "message": "Successfully created product"
@@ -231,7 +224,7 @@
                     }
                 }
             }
-        }
+        }        
       },
       "/products/{id}": {
           "get": {
@@ -247,6 +240,13 @@
                       "schema": {
                           "type": "integer"
                       }
+                  },
+                  {
+                      "name": "x-access-token",
+                      "in": "header",
+                      "description": "Access token for user authentication",
+                      "required": true,
+                      "type": "string"
                   }
               ],
               "responses": {
@@ -327,6 +327,13 @@
                     }
                   }
                 }
+              },
+              {
+                  "name": "x-access-token",
+                  "in": "header",
+                  "description": "Access token for user authentication",
+                  "required": true,
+                  "type": "string"
               }
             ],
             "responses": {
@@ -363,10 +370,17 @@
                       "schema": {
                           "type": "integer"
                       }
+                  },
+                  {
+                      "name": "x-access-token",
+                      "in": "header",
+                      "description": "Access token for user authentication",
+                      "required": true,
+                      "type": "string"
                   }
               ],
               "responses": {
-                  "204": {
+                  "200": {
                       "description": "Successfully deleted product"
                   }
               }

@@ -12,7 +12,13 @@ const catchError = (err , res) => {
 };
 
 verifyToken = (req, res, next) => {
-  let token = req.header["x-access-token"];
+  console.log("auth.jwt.js : ",req.headers);
+  let token = req.headers["x-access-token"];
+  console.log("auth.jwt.js : ",token);
+  // console.log(req);
+  // console.log(res);
+  // console.log(next);
+
   if (!token) {
     return res.status(403).send({ message: "No token provided!" });
   }
