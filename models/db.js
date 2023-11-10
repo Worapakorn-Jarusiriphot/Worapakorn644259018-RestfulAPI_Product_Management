@@ -3,21 +3,18 @@ const dbConfig = require("../config/db.config");
 
 //Create sequalize instance
 const sequelize = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {
-  // host: dbConfig.HOST,
-  // dialect: "mysql", //postgres //mysql
-  // dialectOptions: {
-  //   ssl: {
-  //     require: true,
-  //     rejectUnauthorized: false,
-  //   },
-  // },
   host: dbConfig.HOST,
-  dialect: dbConfig.dialect, // ใช้ค่า dialect ที่กำหนดใน db.config
-  pool: dbConfig.pool, // ใช้ค่า pool ที่กำหนดใน db.config
+  dialect: dbConfig.dialect,
+  dialectOptions: {
+    ssl: {
+      rejectUnauthorized: dbConfig.dialectOptions.ssl.rejectUnauthorized
+    }
+  },
+  pool: dbConfig.pool,
 });
 
 //Test the database connection
-async function testConection(){
+async function testConnection(){
     try {
       await sequelize.authenticate();
       console.log("db.js : Connection has been established successfully.");
@@ -27,5 +24,5 @@ async function testConection(){
     }
 }
 
-testConection();
+testConnection();
 module.exports = sequelize;
