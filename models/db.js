@@ -2,15 +2,15 @@ const {Sequelize} = require("sequelize");
 const dbConfig = require("../config/db.config");
 
 //Create sequalize instance
-const sequelize = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {
-  host: dbConfig.HOST,
-  dialect: dbConfig.dialect,
-  dialectOptions: {
-    ssl: {
-      rejectUnauthorized: dbConfig.dialectOptions.ssl.rejectUnauthorized
-    }
+const sequelize = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD,{
+  host:dbConfig.HOST,
+  dialect: "postgres",
+dialectOptions: {
+  ssl: {
+    require: true,
+    rejectUnauthorized: false, 
   },
-  pool: dbConfig.pool,
+},
 });
 
 //Test the database connection
