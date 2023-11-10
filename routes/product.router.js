@@ -3,81 +3,83 @@ const router = express.Router();
 const Product = require("../controllers/product.controller");
 const { authJwt } = require("../middleware");
 
-//Create a new product
-//http://localhost:5000/products
-router.post("/products", [authJwt.verifyToken, authJwt.isAdmin], async (req, res) => {
-  try {
+// Insert new product to DB
+// http://localhost:5000/products
+router.post("/products", [authJwt.verifyToken, authJwt.isAdmin], async (req,res)=>{
+    try {
     const newProduct = req.body;
+    console.log(newProduct)
     const createProduct = await Product.createProduct(newProduct);
+    console.log(createProduct)
     res.status(201).json(createProduct);
-  } catch (err) {
-    res.status(500).json({ error: "Failed to create product" });
-  }
-});
-
-//Get all products
-router.get("/products", async (req, res) => {
-  try {
-    const products = await Product.getAll();
-    res.status(200).json(products);
-  } catch (error) {
-    res.status(500).json({ error: "Failed to get all products" });
-  }
-});
-
-//Get Product by ID
-router.get("/products/:id", [authJwt.verifyToken], async (req, res) => {
-  try {
-    const productId = req.params.id;
-    const product = await Product.getById(productId);
-    res.json(product);
-  } catch (error) {
-    if (error.kind === "not_found") {
-      res.status(404).json({ error: "Product not found" });
-    } else {
-      res.status(500).json({ error: "Failed to get a product by id" });
+   }catch (err){
+    res.status(500).json({err:"product.router.js :: Fail to create product"});
     }
-  }
 });
 
-//Update a product data
-router.put("/products/:id", [authJwt.verifyToken, authJwt.isAdmin], async (req, res) => {
+//Get All product
+router.get("/products", async(req, res)=>{
+    try {
+        const products = await Product.getAll();
+        console.log(products)
+        res.status(200).json(products);
+    } catch (error) {
+        res.status(500).json({err:"product.router.js :: Fail to create product"});
+    }
+})
+
+// get Product By ID
+router.get("/products/:id", [authJwt.verifyToken], async(req, res)=>{
+    try {
+        const productId = req.params.id;
+        const product = await Product.getById(productId);
+        res.status(200).json(product);
+    } catch (error) {
+        if (error.kind === "not_found") {
+          res.status(404).json({ error: "product.router.js :: Product not found" });
+        } else {
+        res.status(500).json({err:"product.router.js :: Fail to create product by Id"});
+      }
+    }
+})
+
+// Update a product data 
+router.put("/products/:id", [authJwt.verifyToken, authJwt.isAdmin], async(req, res)=>{
   try {
     const productId = req.params.id;
     const productData = req.body;
-    const updateProduct = await Product.updateById(
-      productId,
-      productData
-    );
-    res.status(200).json(updateProduct);
+    const product = await Product.updateById(
+        productId,
+        productData
+        );
+        res.status(200).json(product);
   } catch (error) {
     if (error.kind === "not_found") {
-      res.status(404).json({ error: "Product not found" });
-    } else {
-      res.status(500).json({ error: "Failed to update product data" });
+        res.status(400).json({ error: "product.router.js :: Product not found "});
+    }else {
+        res.status(500).json({ error: "product.router.js :: Failed to update product data"});
     }
   }
 });
 
-//Delete a product
-router.delete("/products/:id", [authJwt.verifyToken, authJwt.isAdmin], async (req, res) => {
-  try {
-    const productId = req.params.id;
-    const isDeleted = await Product.removeById(productId);
-    if (isDeleted) {
-      res
-        .status(200)
-        .json({
-          message: "Product id" + productId + " is deleted",
-          isDeleted: isDeleted,
-        });
-    }
-  } catch (error) {
-    if (error.kind === "not_found") {
-      res.status(404).json({ error: "Product not found" });
-    } else {
-      res.status(500).json({ error: "Failed to update product data" });
-    }
-  }
-});
+//Delete
+router.delete("/products/:id",[authJwt.verifyToken, authJwt.isAdmin], async(req, res)=>{
+    try {
+        const productId = req.params.id;
+        const product = await Product.removeById(productId);
+        if (product) {
+            res.status(200)
+            .json({
+                message: "Product id " + productId + " is deleted",
+                isDelete: product,
+            });
+        }
+    } catch (error) {
+        if (error.kind === "not_found") {
+            res.status(404).json({ error: "product.router.js :: Product not found "});
+        }else {
+            res.status(500).json({ error: "product.router.js :: Failed to update product data"});
+        }
+      }
+    });
 module.exports = router;
