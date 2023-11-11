@@ -6,9 +6,9 @@ const {TokenExpiredError} = jwt;
 
 const catchError = (err , res) => {
   if(err instanceof TokenExpiredError) {
-    return res.status(401).send({message : "Unauthorized! Access Token was expired"});
+    return res.status(401).send({message : "auth.jwt.js : Unauthorized! Access Token was expired"});
   }
-  return res.status(401).send({message : "Unauthorized!"});
+  return res.status(401).send({message : "auth.jwt.js : Unauthorized!"});
 };
 
 verifyToken = (req, res, next) => {
@@ -20,7 +20,7 @@ verifyToken = (req, res, next) => {
   // console.log(next);
 
   if (!token) {
-    return res.status(403).send({ message: "No token provided!" });
+    return res.status(403).send({ message: "auth.jwt.js : No token provided!" });
   }
   jwt.verify(token, config.secret, (err, decoded) => {
     if (err) {
@@ -45,7 +45,7 @@ isAdmin = (req, res, next) => {
           return;
         }
       }
-      res.status(403).send({ message: "Require Admin Role!" });
+      res.status(403).send({ message: "auth.jwt.js : Require Admin Role!" });
       return;
     });
   });
@@ -62,7 +62,7 @@ isModerator = (req, res, next) => {
           return;
         }
       }
-      res.status(403).send({ message: "Require Moderator Role!" });
+      res.status(403).send({ message: "auth.jwt.js : Require Moderator Role!" });
       return;
     });
   });
@@ -83,7 +83,7 @@ isModeratorOrAdmin = (req, res, next) => {
           return;
         }
       }
-      res.status(403).send({ message: "Require Moderator Role!" });
+      res.status(403).send({ message: "auth.jwt.js : Require Moderator Role!" });
       return;
     });
   });

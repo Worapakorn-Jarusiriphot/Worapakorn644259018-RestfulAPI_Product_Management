@@ -26,13 +26,13 @@ exports.signup = (req, res) => {
           },
         }).then((roles) => {
           user.setRoles(roles).then(() => {
-            res.send({ message: "User was registered successfully" });
+            res.send({ message: "auth.controller.js : User was registered successfully" });
           });
         });
       } else {
         //user roleId = 1 (user)
         user.setRoles([1]).then(() => {
-          res.send({ message: "User was registered successfully" });
+          res.send({ message: "auth.controller.js : User was registered successfully" });
         });
       }
     })
@@ -50,7 +50,7 @@ exports.signin = (req, res) => {
   })
     .then(async (user) => {
       if (!user) {
-        return res.status(404).send({ message: "User not found" });
+        return res.status(404).send({ message: "auth.controller.js : User not found" });
       }
 
       let passwordIsValid = bcrypt.compareSync(
@@ -60,7 +60,7 @@ exports.signin = (req, res) => {
       if (!passwordIsValid) {
         return res.status(401).send({
           accessToken: null,
-          message: "Invalid Password",
+          message: "auth.controller.js : Invalid Password",
         });
       }
 

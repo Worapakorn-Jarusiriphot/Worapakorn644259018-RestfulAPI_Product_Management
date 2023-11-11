@@ -17,11 +17,11 @@ Product.create = (newProduct, result) => {
   //INSERT INTO product (id, title, imagePath, description, price, category) VALUES ("1", "...", "...", "...")
   sql.query("INSERT INTO products SET ?", newProduct, (err, res) => {
     if (err) {
-      console.log("error", err);
+      console.log("product.model.sql.js : error", err);
       result(err, null);
       return;
     }
-    console.log("New product inserted:", { id: res.id, ...newProduct });
+    console.log("product.model.sql.js :: New product inserted:", { id: res.id, ...newProduct });
     result(null, { id: res.id, ...newProduct });
   });
 };
@@ -31,7 +31,7 @@ Product.getAll = (result) => {
   //SELECT * FROM products
   sql.query("SELECT * FROM products", (err, res) => {
     if (err) {
-      console.log("error", err);
+      console.log("product.model.sql.js : error", err);
       result(err, null);
       return;
     }
@@ -47,7 +47,7 @@ Product.getById = (productId, result) => {
     (err, res) => {
       //fail
       if (err) {
-        console.log("error", err);
+        console.log("product.model.sql.js : error", err);
         result(err, null);
         return;
       }
@@ -57,7 +57,7 @@ Product.getById = (productId, result) => {
         return; 
       }
       //fail
-      result({ kind: "not_found" }, null);
+      result({ kind: "product.model.sql.js : not_found" }, null);
     }
   );
 };
@@ -71,13 +71,13 @@ Product.updateById = (id, params, result) => {
     (err, res) => {
       //fail
       if (err) {
-        console.log("err", err);
+        console.log("product.model.sql.js : err", err);
         result(err, null);
         return;
       }
       //fail
       if (res.length == 0) {
-        result({ kind: "not_found" }, null);
+        result({ kind: "product.model.sql.js : not_found" }, null);
         return;
       }
       //Success
@@ -92,17 +92,17 @@ Product.deleteById = (id, result) =>{
     sql.query("DELETE FROM products WHERE id = ?", id, (err,res)=>{
       //fail
       if (err) {
-        console.log("err", err);
+        console.log("product.model.sql.js : err", err);
         result(err, null);
         return;
       }
       //fail
       if (res.length == 0) {
-        result({ kind: "not_found" }, null);
+        result({ kind: "product.model.sql.js : not_found" }, null);
         return;
       }
       //Success
-      console.log("Product id:" + id+ " is deleted !");
+      console.log("product.model.sql.js :: Product id:" + id+ " is deleted !");
       result(null, res);
     });
 }
