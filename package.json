@@ -1,7 +1,7 @@
 {
-  "name": "restful_api_sql",
+  "name": "restful_api",
   "version": "1.0.0",
-  "description": "this is a restful api using MySQL",
+  "description": "this is a restful api using Postgres",
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
